@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     const MaterialApp(
-      title: 'My App',
-      home: SafeArea(child: MyScaffold()),
+      title: 'Flutter Tutorial',
+      home: MyAppBar(title: 'My App Bar'),
     ),
   );
 }
@@ -12,50 +12,52 @@ void main() {
 class MyAppBar extends StatelessWidget {
   const MyAppBar({required this.title, super.key});
 
-  final Widget title;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(color: const Color.fromARGB(255, 33, 82, 243)),
-
-      //Row is a horizontal in linear layout
-      child: Row(
-        children: [
-          const IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: 'Navigation Menu',
-            onPressed: null,
-          ),
-          Expanded(child: title),
-          const IconButton(
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          tooltip: 'Navigation Menu',
+          onPressed: null,
+        ),
+        title: const Text('Example Title'),
+        actions: [
+          IconButton(
             icon: Icon(Icons.search),
             tooltip: 'Search',
             onPressed: null,
           ),
         ],
       ),
-    );
-  }
-}
-
-class MyScaffold extends StatelessWidget {
-  const MyScaffold({super.key});
-
-  Widget build(BuildContext context) {
-    return Material(
-      child: Column(
-        children: [
-          MyAppBar(
-            title: Text(
-              'Title Bar !!',
-              style: Theme.of(context).primaryTextTheme.titleLarge,
-            ),
-          ),
-          const Expanded(child: Center(child: Text('Hello World !!'))),
-        ],
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: List.generate(18, (i) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 15,
+                children: [
+                  Text(
+                    'This is Row ${i + 1}',
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  const Icon(Icons.favorite, color: Colors.red),
+                ],
+              ),
+            );
+          }),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Add',
+        onPressed: null,
+        child: const Icon(Icons.add),
       ),
     );
   }
